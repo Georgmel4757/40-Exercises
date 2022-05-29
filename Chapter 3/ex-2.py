@@ -5,7 +5,7 @@ def main():
     ex1 = "flag"
     ex2 = "Apple"
     ex3 = "button"
-    ex4 = "     "
+    ex4 = ""
     ex5 = "I like to eat honey waffles."
     ex6 = "Do you think it is going to rain today?"
 
