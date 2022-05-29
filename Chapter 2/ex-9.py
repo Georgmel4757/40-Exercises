@@ -29,7 +29,7 @@ def hexLattice(number):
     
     circles = product
     spaces = product
-    sign = "8"
+    sign = "o"
     for i in range(1, product * 2):
         if i < product:
             result += (f"{' '*spaces + f'{sign} '*circles}".rstrip()
