@@ -7,7 +7,8 @@ class Spider:
         self.num_coord = int(coords[1])
     
     def __str__(self):
-        return f"Coords - {self.sign_coord}{self.num_coord}"
+        return (f"Class - 'Spider'\n"
+                f"Coords - {self.get_coords()}")
 
     def get_coords(self):
         return f"{self.sign_coord}{self.num_coord}"
