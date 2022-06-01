@@ -1,4 +1,5 @@
 from math import sqrt
+import re
 
 
 class Spider:
@@ -69,26 +70,22 @@ def main():
  
 
 def spiderVsFly(spi_coords: str, fly_coords: str):
-    range_a_z = [chr(num) for num in range(65, 73)]
-    range_0_4 = [str(num) for num in range(5)]
+    if type(spi_coords) != str or type(fly_coords) != str:
+        return None
+    if not re.fullmatch(r"[A-Z][0-9]", spi_coords):
+        return None
+    if not re.fullmatch(r"[A-Z][0-9]", fly_coords):
+        return None
 
-    assert len(spi_coords) == 2, "Coords not valid" 
-    assert len(fly_coords) == 2, "Coords not valid"
-
-    if spi_coords[0] not in range_a_z or spi_coords[1] not in range_0_4:
-        assert False, "Spider coords not in range 'A-H' or '0-4'"
-    if fly_coords[0] not in range_a_z or fly_coords[1] not in range_0_4:
-        assert False, "Fly coords not in range 'A-H' or '0-4'"
-    
-    if spi_coords[1] == "0":
+    if spi_coords[-1] == "0":
         spi_coords = "A0"
-    if fly_coords[1] == "0":
+    if fly_coords[-1] == "0":
         fly_coords = "A0"
 
-    count_around, steps_around = around_ring(spi_coords, fly_coords)
-    count_through, steps_through = through_middle(spi_coords, fly_coords)
+    distance_around, steps_around = around_ring(spi_coords, fly_coords)
+    distance_through, steps_through = through_middle(spi_coords, fly_coords)
 
-    if count_around > count_through:
+    if distance_around > distance_through:
         result = "-".join(steps_through)
     else:
         result = "-".join(steps_around)
@@ -96,7 +93,7 @@ def spiderVsFly(spi_coords: str, fly_coords: str):
     return result
 
 
-def around_ring(spi_coords, fly_coords):
+def around_ring(spi_coords: str, fly_coords: str):
     distance = 0
     steps = []
 
@@ -119,7 +116,7 @@ def around_ring(spi_coords, fly_coords):
                 distance += 1
                 spi.move_outside()
                 
-        elif spi.num_coord > fly.num_coord:
+        elif spi.num_coord >= fly.num_coord:
             if spi.num_coord != fly.num_coord:
                 distance += 1
                 spi.move_middle()
@@ -127,18 +124,7 @@ def around_ring(spi_coords, fly_coords):
                     in (1, 2, 3, 4, -5, -6, -7)):
                 distance += spi.num_coord * sqrt(2 - sqrt(2))
                 spi.move_clockwise()
-            elif (ord(spi.sign_coord) - ord(fly.sign_coord) 
-                    in (1, 2, 3, 4, -5, -6, -7)):
-                distance += spi.num_coord * sqrt(2 - sqrt(2))
-                spi.move_counterclockwise()
-
-        else:
-            if (ord(fly.sign_coord) - ord(spi.sign_coord) 
-                    in (1, 2, 3, 4, -5, -6, -7)):
-                distance += spi.num_coord * sqrt(2 - sqrt(2))
-                spi.move_clockwise()
-            elif (ord(spi.sign_coord) - ord(fly.sign_coord) 
-                    in (1, 2, 3, 4, -5, -6, -7)):
+            else:
                 distance += spi.num_coord * sqrt(2 - sqrt(2))
                 spi.move_counterclockwise()
         
@@ -147,7 +133,7 @@ def around_ring(spi_coords, fly_coords):
     return (distance, steps)
 
 
-def through_middle(spi_coords, fly_coords):
+def through_middle(spi_coords: str, fly_coords: str):
     distance = 0
     steps = []
     was_middle = False
