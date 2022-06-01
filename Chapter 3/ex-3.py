@@ -20,21 +20,19 @@ def main():
 
 def getHashTags(line):
     max_words = []
-    line = re.sub(r"""[.!?,:;()'"]|( - )""", " ", line)
 
-    for fragment in line.split():
-        fragment = fragment.strip().lower()
+    for fragment in re.findall(r"[A-Za-z]+", line):
+        fragment = fragment.lower()
         if not len(max_words):
             max_words.append(fragment)
             continue
         for i, word in enumerate(max_words):
-            if len(fragment) > len(word) :
+            if len(fragment) > len(word):
                 max_words.insert(i, fragment)
                 break
-            elif len(max_words) < 3:
-                max_words.insert(i+1, fragment)
-                break
-        if len(max_words) == 4:
+        if len(max_words) < 3 and fragment not in max_words:
+            max_words.append(fragment)
+        elif len(max_words) == 4:
             max_words.pop()
 
     max_words = [f"#{word}" for word in max_words]
