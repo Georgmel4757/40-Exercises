@@ -27,18 +27,14 @@ class Spider:
             self.sign_coord = chr(ord(self.sign_coord) - 1)
     
     def move_middle(self):
-        if self.num_coord == 0:
-            pass
+        if self.num_coord != 0:
+            self.num_coord -= 1
         elif self.num_coord - 1 == 0:
             self.sign_coord = "A"
             self.num_coord = 0
-        else: 
-            self.num_coord -= 1
     
     def move_outside(self):
-        if self.num_coord == 4:
-            pass
-        else: 
+        if self.num_coord != 4:
             self.num_coord += 1
 
 
@@ -70,11 +66,13 @@ def main():
  
 
 def spiderVsFly(spi_coords: str, fly_coords: str):
-    if type(spi_coords) != str or type(fly_coords) != str:
+    if not isinstance(spi_coords, str):
         return None
-    if not re.fullmatch(r"[A-Z][0-9]", spi_coords):
+    if not isinstance(fly_coords, str):
         return None
-    if not re.fullmatch(r"[A-Z][0-9]", fly_coords):
+    if not re.fullmatch(r"[A-H][0-4]", spi_coords):
+        return None
+    if not re.fullmatch(r"[A-H][0-4]", fly_coords):
         return None
 
     if spi_coords[-1] == "0":
