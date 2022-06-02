@@ -18,35 +18,34 @@ def main():
 def hexLattice(number):
     count = 1
     product = 1
+
     while count < number:
         count += product * 6
         product += 1
-
     if count != number:
         return "Invalid"
     
-    result = ""
-    
-    circles = product
-    spaces = product
     sign = "o"
+    hexagon = ""
+    count_circles = product
+    count_spaces = product
+
     for i in range(1, product * 2):
+        spaces = " " * count_spaces
+        circles = " ".join(sign * count_circles)
+        hexagon += "{0}{1}{0}".format(spaces, circles)
         if i < product:
-            result += (f"{' '*spaces + f'{sign} '*circles}".rstrip()
-                        + f"{' '*spaces}")
-            circles += 1
-            spaces -= 1
+            count_circles += 1
+            count_spaces -= 1
         else:
-            result += (f"{' '*spaces + f'{sign} '*circles}".rstrip() 
-                    + f"{' '*spaces}")
-            circles -= 1
-            spaces += 1
+            count_circles -= 1
+            count_spaces += 1
 
-        result += "\n"
+        hexagon += "\n"
     
-    result = result.rstrip("\n")
+    hexagon = hexagon.rstrip("\n")
 
-    return result
+    return hexagon
 
 
 if __name__ == "__main__":
