@@ -1,4 +1,5 @@
 from fractions import Fraction
+import re
 
 
 def main():
@@ -9,30 +10,23 @@ def main():
     print(fractions("0.1097(3)"))
  
 
-def fractions(num):
-    integer, real = num.strip().split(".")
-    is_period = False
-    left_num = ""
-    period = "" 
+def fractions(number):
+    if not isinstance(number, str):
+        return None
+    if not re.fullmatch(r"\d+\.\d*\(\d+\)", number.strip()):
+        return None
 
-    for sign in real:
-        if sign.isdigit() and not is_period:
-            left_num += sign
-        elif sign.isdigit() and is_period:
-            period += sign
-        elif sign == "(":
-            is_period = True
-        elif sign == ")":
-            is_period = False
-            break
+    integer, real = number.strip().split(".")
+    period = re.findall(r"\(\d+\)", real)[0][1:-1]
+    mixed_part = re.findall(r"\d*\(", real)[0][:-1]
     
-    if left_num:
-        numerator = int(left_num+period) - int(left_num)
-        denominator = int("9"*len(period)) * 10**len(left_num)
+    if mixed_part:
+        numerator = int(mixed_part + period) - int(mixed_part)
+        denominator = int("9" * len(period)) * 10 ** len(mixed_part)
         dec = int(integer) + Fraction(numerator, denominator)
     else:
         numerator = int(period)
-        denominator = int("9"*len(period))
+        denominator = int("9" * len(period))
         dec = int(integer) + Fraction(numerator, denominator)
 
     result = "{0}/{1}".format(dec.numerator, dec.denominator)
