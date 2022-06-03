@@ -10,6 +10,7 @@ def main():
     print(res_1)
     print(res_2)
     print(res_3)
+    print(rearrange(9328, 456))
  
 
 def rearrange(num1, num2):
