@@ -3,17 +3,16 @@ def main():
     ex2 = (9132, 5564)
     ex3 = (8732, 91255)
 
-    res_1 = rearrange(*ex1)
-    res_2 = rearrange(*ex2)
-    res_3 = rearrange(*ex3)
+    res_1 = maxPossible(*ex1)
+    res_2 = maxPossible(*ex2)
+    res_3 = maxPossible(*ex3)
 
     print(res_1)
     print(res_2)
     print(res_3)
-    print(rearrange(9328, 456))
  
 
-def rearrange(num1, num2):
+def maxPossible(num1, num2):
     if type(num1) != int or type(num2) != int:
         return None
         
