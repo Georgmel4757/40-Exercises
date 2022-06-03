@@ -27,11 +27,11 @@ class Spider:
             self.sign_coord = chr(ord(self.sign_coord) - 1)
     
     def move_middle(self):
-        if self.num_coord != 0:
-            self.num_coord -= 1
-        elif self.num_coord - 1 == 0:
+        if self.num_coord - 1 == 0:
             self.sign_coord = "A"
             self.num_coord = 0
+        elif self.num_coord != 0:
+            self.num_coord -= 1
     
     def move_outside(self):
         if self.num_coord != 4:
