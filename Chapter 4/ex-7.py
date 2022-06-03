@@ -1,5 +1,5 @@
 def main():
-    print(isExact(1))
+    print(isExact(6))
     print(isExact(24))
     print(isExact(125))
     print(isExact(720))
